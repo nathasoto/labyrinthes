@@ -1,0 +1,22 @@
+body{
+
+    display: grid;
+    justify-content: center;
+}
+
+#container{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr  1fr 1fr 1fr ;
+    grid-template-rows: 1fr 1fr 1fr  1fr 1fr 1fr; 
+   
+}
+.cell{
+    
+    width: 3.125rem;
+    height: 3.125rem;
+    background-color: black;
+    box-sizing : border-box;
+}
+
+
