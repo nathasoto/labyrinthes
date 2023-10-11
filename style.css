@@ -1,4 +1,4 @@
-body{
+/* body{
 
     display: grid;
     justify-content: center;
@@ -7,16 +7,26 @@ body{
 #container{
 
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr  1fr 1fr 1fr ;
-    grid-template-rows: 1fr 1fr 1fr  1fr 1fr 1fr; 
-   
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
 }
 .cell{
     
-    width: 3.125rem;
-    height: 3.125rem;
+    width: 70px;
+    height: 70px;
     background-color: black;
     box-sizing : border-box;
+} */
+
+* {
+  
+    box-sizing: border-box;    
+    
 }
 
-
+.main-container {
+   
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}

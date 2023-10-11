@@ -1,4 +1,4 @@
-labyrinthe = {
+data = {
     "3": {
         "ex-0": [
             {
