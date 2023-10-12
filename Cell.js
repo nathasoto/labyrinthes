@@ -9,6 +9,7 @@ class Cell {
         this.width = 100; // largeur en px
         this.exit = cellData.exit;
         this.visited = false; 
+        
     }
 
     getDOM(){
@@ -35,7 +36,7 @@ class Cell {
         return cellDOM;
     }
 
- 
+
     computeBorders(){
         return this.walls.map( wall => wall ? '1px' : '0px').join(' ')
     }
