@@ -3,12 +3,17 @@ class Cell {
     constructor( cellData ){
 
         this.entrance = cellData.entrance;
-        this.rowX = cellData.posX;
-        this.columnY = cellData.posY;   
+        this.posX= cellData.posX;
+        this.posY = cellData.posY;   
         this.walls = cellData.walls;
         this.width = 100; // largeur en px
-        this.exit = cellData.exit;
         this.visited = false; 
+
+        this.exit = cellData.exit ? true : false; //ternary
+        this.entrance = cellData.entrance ? true : false;
+        this.parent = new Array();
+        
+
         
     }
 

@@ -8,6 +8,9 @@ let labyData = data[size][ex];
 let labyrinthe = new Labyrinthe( labyData );
 
 labyrinthe.display();
-labyrinthe.getcell(0);
 
-DFS_interative(labyData,labyrinthe.getcell(0));
+let cell = labyrinthe.getcell(0,0);
+labyrinthe.getNeighbors(cell);
+
+DFS_interative(cell);
+

@@ -38,94 +38,100 @@ class Labyrinthe {
     }
 
 
-    getcell(index) {
+    // getcell(index) {
+
+    //     let cells = this.initCells(labyData);
+    //     let cell = cells[index];
+    //     console.log(cell);
+    //     return cell;
+
+    // }
+
+    getcell(cellCouranteX, cellCouranteY) {
 
         let cells = this.initCells(labyData);
-        let cell = cells[index];
-        console.log(cell);
+        let cell = cells.find(cell => cell.posX === cellCouranteX && cell.posY === cellCouranteY);
+        //console.log(cell);
         return cell;
 
     }
 
-    getNeighbor(arraySize, index) {
-
-        let cells = this.initCells(labyData);
-        
-        
-        
-        
-
-
-        return neighbor;
-
-
-    }
-
-    getNeighbors(cellCourante, labyData) {
+    getNeighbors(cellCourante) {
 
         let neighbors = [];
 
+        let y = cellCourante.posY;
+        let x = cellCourante.posX;
+
         if (!cellCourante.walls[0]) {//top
 
-            neighbors.push(cellCourante.walls[0]);
+            let neighbor = labyrinthe.getcell(y - 1, x);
+            neighbors.push(neighbor);
 
         }
         if (!cellCourante.walls[1]) {//right
 
-            let y = cellCourante.columnY;
-            let x = cellCourante.rowX;
-
-            //let neighbor = labyData.[0];
-
-
-            neighbors.push(cellCourante);
+            let neighbor = labyrinthe.getcell(y, x+1);
+            neighbors.push(neighbor);
 
         }
         if (!cellCourante.walls[2]) {//bottom
 
-            neighbors.push(cellCourante.walls[2]);
+            let neighbor = labyrinthe.getcell(y + 1, x);
+            neighbors.push(neighbor);
 
         }
         if (!cellCourante.walls[3]) {//left
 
-            neighbors.push(cellCourante.walls[3]);
+            let neighbor = labyrinthe.getcell(y, x-1);
+            neighbors.push(neighbor);
 
         }
-
-        console.log(neighbors);
+        
+        //console.log(neighbors);
         return neighbors;
 
     }
 
 
-
 }
 
 
-function DFS_interative(labyData, cellStar) {
+function DFS_interative(cellStart) {
 
-    const stack = [cellStar];
-    const visited = new Set(); //set stocker 
-    const result = [];
+    let stack = [cellStart];
+    let result = [];
+    //console.log(cellStart);
 
-    //console.log(stack.length);
+    while (stack.length+1) {
 
-    while (stack.length) {
+        let cellCourante = stack.pop();
+        
+        console.log(cellCourante.exit);
+        
+        if(cellCourante.exit){
 
-        const cellCourante = stack.pop();
+            return result;
+        }
 
-
-        if (!visited.has(cellCourante)) { //has renvoie un booléén si le trouver
-            visited.add(cellCourante); //stoker v as visited
+        if (!cellCourante.visited) { 
+            cellCourante.visited = true;
             result.push(cellCourante);
 
 
+            let neighbors = labyrinthe.getNeighbors(cellCourante);
+            
 
-            let neighbors = labyrinthe.getNeighbors(cellCourante, labyData)
-
-            // for (const neighbor of labyData) {
-            //   stack.push(neighbor);
-            // }
+            for (let neighbor of neighbors) {
+                
+                 if(!neighbor.visited){
+                    
+                    neighbor.parent.push(cellCourante);
+                    console.log(neighbor);
+                    
+                 }
+              
+             }
         }
     }
 
