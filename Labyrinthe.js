@@ -49,96 +49,140 @@ class Labyrinthe {
 
     getcell(cellCouranteX, cellCouranteY) {
 
-        let cells = this.initCells(labyData);
-        let cell = cells.find(cell => cell.posX === cellCouranteX && cell.posY === cellCouranteY);
-        //console.log(cell);
-        return cell;
-
+        return this.cells.find(cell => cell.posX === cellCouranteX && cell.posY === cellCouranteY);
+        
     }
 
-    getNeighbors(cellCourante) {
+    getUnVisitedNeighbors(cellCourante) {
 
         let neighbors = [];
 
-        let y = cellCourante.posY;
-        let x = cellCourante.posX;
-
         if (!cellCourante.walls[0]) {//top
 
-            let neighbor = labyrinthe.getcell(y - 1, x);
-            neighbors.push(neighbor);
-
+            let neighbor = this.getcell(cellCourante.posX - 1, cellCourante.posY);
+            if(!neighbor.visited){
+                neighbors.push(neighbor);
+            }
+           
         }
         if (!cellCourante.walls[1]) {//right
 
-            let neighbor = labyrinthe.getcell(y, x+1);
-            neighbors.push(neighbor);
+            let neighbor = this.getcell(cellCourante.posX, cellCourante.posY );
+            if(!neighbor.visited){
+                neighbors.push(neighbor);
+            }
 
         }
         if (!cellCourante.walls[2]) {//bottom
 
-            let neighbor = labyrinthe.getcell(y + 1, x);
-            neighbors.push(neighbor);
-
+            let neighbor = this.getcell(cellCourante.posX + 1, cellCourante.posY);
+            if(!neighbor.visited){
+                neighbors.push(neighbor);
+            }
         }
         if (!cellCourante.walls[3]) {//left
 
-            let neighbor = labyrinthe.getcell(y, x-1);
-            neighbors.push(neighbor);
-
+            let neighbor = this.getcell(cellCourante.posX, cellCourante.posY - 1);
+            if(!neighbor.visited){
+                neighbors.push(neighbor);
+            }
         }
-        
+
         //console.log(neighbors);
-        return neighbors;
+        //let unvisited = neighbors.filter((neighbor) => neighbor.visited === false);
+        //console.log(unvisited);
+        return neighbors ;
 
     }
 
+    getEntrance(){
 
-}
+        return this.cells.find(cell => cell.entrance == true)
+    }
+    path(cell){
 
+        let path = [cell];
+        while(cell.parent){
+            cell = cell.parent;
+            //cell.color();
+            path.push(cell);
 
-function DFS_interative(cellStart) {
-
-    let stack = [cellStart];
-    let result = [];
-    //console.log(cellStart);
-
-    while (stack.length+1) {
-
-        let cellCourante = stack.pop();
-        
-        console.log(cellCourante.exit);
-        
-        if(cellCourante.exit){
-
-            return result;
         }
+        console.log(path);
+        return path;
 
-        if (!cellCourante.visited) { 
-            cellCourante.visited = true;
-            result.push(cellCourante);
+    }
 
+    DFS_interative() {
+        
+        let entrance = this.getEntrance();
+        let stack = [entrance];
+        let result = [];
 
-            let neighbors = labyrinthe.getNeighbors(cellCourante);
+        while (stack.length) {
+
+            let CurrentCell = stack.pop();
+            CurrentCell.setVisited();
+            //result.push(CurrentCell);
+             console.log(CurrentCell.isExit);
+            if (CurrentCell.isExit==true) {
+                console.log("exit");
+                //return this.path(CurrentCell);
+                console.log(result);
+                return result;
+            }
             
-
+        
+            let neighbors = this.getUnVisitedNeighbors(CurrentCell);
+        
             for (let neighbor of neighbors) {
-                
-                 if(!neighbor.visited){
-                    
-                    neighbor.parent.push(cellCourante);
-                    console.log(neighbor);
-                    
-                 }
-              
-             }
+                 
+                     console.log(neighbor);
+                     neighbor.parent.push(CurrentCell);
+                     neighbor.parent = CurrentCell;
+                     result.push(neighbor);
+                     stack.push(neighbor); 
+
+            }
+           
+           
+           
+
         }
+
+        //     
+        //     if (!cellCourante.visited) { 
+
+        //         cellCourante.visited = true;
+        //         result.push(cellCourante);
+        //         //console.log(cellCourante.visited);
+
+        //         let neighbors = this.getNeighbors(cellCourante);
+
+        //         for (let neighbor of neighbors) {
+
+        //             //console.log(neighbor);
+
+        //             if(!neighbor.visited){
+
+        //                 neighbor.parent.push(cellCourante);
+        //                 //console.log(neighbor);
+        //                 stack.push(neighbor);
+        //                 //console.log(stack);
+        //             }
+        //         }
+
+
+        //     }
+        // }
+
     }
 
-    //console.log(result);
-    return result;
 
 }
+
+
+
 
 
 

@@ -17,6 +17,20 @@ class Cell {
         
     }
 
+    isExit(){
+        return this.exit;
+    }
+    color(){
+        let dom = document.getElementById(this.id);
+        dom.style.backgroundColor = 'red';
+
+    }
+    setVisited(){
+        this.visited = true;
+        let dom = document.getElementById(this.id);
+        //dom.style.backgroundColor = 'red';
+    }
+
     getDOM(){
 
         let cellDOM = document.createElement('div');
